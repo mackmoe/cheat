@@ -1,6 +1,89 @@
+## REFACTOR FILENAMES - Relocate and remove versioned files
+# Deletes the file from the working directory and stages the deletion
+$ git rm [file]
+# Removes the file from version control but preserves the file locally
+$ git rm --cached [file]
+# Changes the file name and prepares it for commit
+$ git mv [file-original] [file-renamed]
+
+## REVIEW HISTORY - Browse and inspect the evolution of project files
+# Lists version history for the current branch
+$ git log
+# Lists version history for a file, including renames
+$ git log --follow [file]
+# Shows content differences between two branches
+$ git diff [first-branch]...[second-branch]
+# Outputs metadata and content changes of the specified commit
+$ git show [commit]
+
+# Lists all ignored files in this project
+$ git ls-files --other --ignored --exclude-standard
+
+## REDO COMMITS - Erase mistakes and craf replacement history
+# Undoes all commits afer [commit], preserving changes locally
+$ git reset [commit]
+# Discards all history and changes back to the specified commit
+$ git reset --hard [commit]
+
+## SYNCHRONIZE CHANGES - Register a repository bookmark and exchange version history
+# Downloads all history from the repository bookmark
+$ git fetch [bookmark]
+# Combines bookmark’s branch into current local branch
+$ git merge [bookmark]/[branch]
+# Uploads all local branch commits to GitHub
+$ git push [alias] [branch]
+# Downloads bookmark history and incorporates changes
+$ git pull
+
+## REFACTOR FILENAMES - Relocate and remove versioned files
+# Deletes the file from the working directory and stages the deletion
+$ git rm [file]
+# Removes the file from version control but preserves the file locally
+$ git rm --cached [file]
+# Changes the file name and prepares it for commit
+$ git mv [file-original] [file-renamed]
+
+## MAKE CHANGES - Review edits and craft a commit transaction
+# Lists all new or modified files to be commited
+$ git status
+# Snapshots the file in preparation for versioning
+$ git add [file]
+# Unstages the file, but preserve its contents
+$ git reset [file]
+# Shows file differences not yet staged
+$ git diff
+# Shows file differences between staging and the last file version
+$ git diff --staged
+# Records file snapshots permanently in version history
+$ git commit -m "[descriptive message]"
+
+
+## GROUP CHANGES - Name a series of commits and combine completed efforts
+# Lists all local branches in the current repository
+$ git branch
+# Creates a new branch
+$ git branch [branch-name]
+# Switches to the specified branch and updates the working directory
+$ git checkout [branch-name]
+# Combines the specified branch’s history into the current branch
+$ git merge [branch]
+# Deletes the specified branch
+$ git branch -d [branch-name]
+
 # To set your identity:
-git config --global user.name "John Doe"
-git config --global user.email johndoe@example.com
+git config <optional --global> user.name "John Doe"
+git config <optional --global> user.email johndoe@example.com
+
+# To see what your current configs are
+git config -l
+
+# Fix ssl for cloning with http instead of ssh:
+1) from target directory 'git init'
+2) then 'git config http.sslverify false'
+3) add to .bashrc inside that directory 'export GIT_SSL_NO_VERIFY=1'
+
+# To view docs from command line
+git help <git-cmd>
 
 # To set your editor:
 git config --global core.editor emacs

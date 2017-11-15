@@ -1,2 +1,9 @@
 # Printout disk free space in a human readable format
 df -h
+
+# Print disk usage(GB) into a file
+sudo du -h / --max-depth=3 | awk '/[0-9]+G/' | sort -n -r > gbdiskusage.txt
+
+
+# Print disk usage(MB)  into a file
+sudo du -h / --max-depth=3 | awk '/[0-9]+M/' | sort -n -r > mbdiskusage.txt

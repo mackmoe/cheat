@@ -1,0 +1,92 @@
+## rabbitmqctl commands
+
+* rabbitmqctl cluster_status - ezpz report of what's going on
+
+* rabbitmqctl list_queues - to see what queues RabbitMQ has and how many messages are in them
+
+* rabbitmqctl stop_app
+
+* rabbitmqctl start_app
+
+* rabbitmqctl stop [-n \<node\>]
+
+* rabbitmqctl join_cluster <node>
+
+# Stop and restart a RabbitMQ cluster on Openstack #
+To stop and start the cluster, keep in mind the order in which you shut the nodes down. The last node you stop, needs to be the first node you start. This node is the master.
+If you start the nodes out of order, you could run into an issue where it thinks the current master should not be the master and drops the messages to ensure that no new messages are queued while the real master is down.
+
+
+## Dump detailed report on RabbitMQ instance
+
+* rabbitmqctl report 
+
+
+## rabbitmqctl vhost commands
+
+* rabbitmqctl list_vhosts
+
+* rabbitmqctl list_queues -p <vhost>
+
+* rabbitmqctl add_vhost [vhost_name]
+
+* rabbitmqctl delete_vhost [vhost_name]
+
+* rabbitmqctl list_vhost [vhost_name]
+
+## permissions
+
+* rabbitmqctl set_permissions [-p \<vhost\>] \<user\> \<conf\> \<write\> \<read\>
+  \# example: rabbitmqctl set_permission -p sycamore xiaochen ".\*" ".\*" ".\*"
+
+
+## rabbitmq-server services
+
+\# starts the service
+* service rabbitmq-server start
+
+\# stops the service
+* service rabbitmq-server stop
+
+\# restarts the service
+* service rabbitmq-server restart
+
+\# checks the status of the service
+* service rabbitmq-server status
+
+
+## Plugin management
+
+* /usr/lib/rabbitmq/bin/rabbitmq-plugins enable <name>
+
+* /usr/lib/rabbitmq/bin/rabbitmq-plugins list
+
+
+
+#### Live modifications using eval
+
+* rabbitmqctl eval 'application:set_env(rabbit, reverse_dns_lookups, true).'
+
+
+
+#### Convert disk node to RAM node
+
+* rabbitmqctl change_cluster_node_type ram
+
+
+#### Configuring Limits
+
+#\ Find out about actual limits
+rabbitmqctl status | grep -A 4 file_descriptors
+ {file_descriptors,
+     [{total_limit,924},
+      {total_used,831},
+      {sockets_limit,829},
+      {sockets_used,829}]},
+
+
+#\ To increase it to e.g. 10000 open files:
+rabbitmqctl eval 'file_handle_cache:set_limit(10000).'
+
+
+
